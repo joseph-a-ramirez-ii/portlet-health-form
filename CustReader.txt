@@ -1,0 +1,372 @@
+                        SqlCommand sqlcmdHealthForm = new SqlCommand(
+                        "SELECT ID_NUM, HEALTH_CDE, BEGIN_DTE,COMMENT_TXT "
+                      + "FROM STUD_HLTH_PROFILE "
+                      + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + Jenzabar.Portal.Framework.PortalUser.Current.HostID + "'", sqlcon);
+                        // Populate from from DB
+                        SqlDataReader hlthreader = sqlcmdHealthForm.ExecuteReader();
+                        if (hlthreader.HasRows)
+                        {
+                            while (hlthreader.Read())
+                            {
+                                inputCde = hlthreader["HEALTH_CDE"].ToString();
+                                inputDte = hlthreader["BEGIN_DTE"].ToString().Substring(0, 10);
+
+                                if (inputCde == "TETANUS ")
+                                {
+                                    this.tetdipDt.Text = inputDte;
+                                }
+                                if (inputCde == "MENING  ")
+                                {
+                                    this.meningitisDt.Text = inputDte;
+                                }
+                                if (inputCde == "POLIO   ")
+                                {
+                                    this.polio.Text = inputDte;
+                                }
+                                if (inputCde == "MEASLES1")
+                                {
+                                    this.measlesDt1.Text = inputDte;
+                                }
+                                if (inputCde == "MMR1    ")
+                                {
+                                    this.Imunmmr1.Text = inputDte;
+                                }
+                                if (inputCde == "HEPB1   ")
+                                {
+                                    this.Imunhep1.Text = inputDte;
+                                }
+                                if (inputCde == "MEASLES2")
+                                {
+                                    this.measlesDt2.Text = inputDte;
+                                }
+                                if (inputCde == "MMR2    ")
+                                {
+                                    this.Imunmmr2.Text = inputDte;
+                                }
+                                if (inputCde == "HEPB2   ")
+                                {
+                                    this.Imunhep2.Text = inputDte;
+                                }
+                                if (inputCde == "MUMPS   ")
+                                {
+                                    this.Imunmumps.Text = inputDte;
+                                }
+                                if (inputCde == "HEPB3   ")
+                                {
+                                    this.Imunhep3.Text = inputDte;
+                                }
+                                if (inputCde == "RUBELLA ")
+                                {
+                                    this.Imunrubella.Text = inputDte;
+                                }
+                                if (inputCde == "TBTEST  ")
+                                {
+                                    this.tbtestdt.Text = inputDte;
+                                }
+                                if (inputCde == "XRAY    ")
+                                {
+                                    this.chestxray.Text = inputDte;
+                                }
+
+                            }
+
+                        }
+                        hlthreader.Close();
+                        SqlCommand sqlcmdCustForm = new SqlCommand(
+                         "SELECT ID_NUM, HEALTH_CDE, HEALTH_CDE_DESC,COMMENTS1,COMMENTS2,COMMENTS3,COMMENTS4,COMMENTS5 "
+                       + "FROM CUST_STUD_HLTH_PROFILE "
+                       + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + Jenzabar.Portal.Framework.PortalUser.Current.HostID + "'", sqlcon);
+
+                        SqlDataReader custreader = sqlcmdCustForm.ExecuteReader();
+                        if (custreader.HasRows)
+                        {
+                            while (custreader.Read())
+                            {
+                                inputCde = custreader["HEALTH_CDE"].ToString();
+                                inputDte = custreader["HEALTH_CDE_DESC"].ToString();
+                                if (inputCde == "CONSENT ")
+                                {
+                                    this.CheckBox4.Checked = true;
+                                    this.parentgd.Text = custreader["HEALTH_CDE_DESC"].ToString();
+                                    this.parentgdPh.Text = custreader["COMMENTS1"].ToString();
+                                    this.parentgdCty.Text = custreader["COMMENTS2"].ToString();
+                                    this.parentgdSt.Text = custreader["COMMENTS3"].ToString();
+                                    this.parentgdZip.Text = custreader["COMMENTS4"].ToString();
+                                }
+                                if (inputCde == "HIBLPREL")
+                                {
+                                    this.hiBlPressRel.Checked = true;
+                                }
+                                if (inputCde == "HTDISREL")
+                                {
+                                    this.hrtdisRel.Checked = true;
+                                }
+                                if (inputCde == "STROKREL")
+                                {
+                                    this.strokeRel.Checked = true;
+                                }
+                                if (inputCde == "BLEEDREL")
+                                {
+                                    this.bldDisorderRel.Checked = true;
+                                }
+                                if (inputCde == "DIABREL ")
+                                {
+                                    this.diabetesRel.Checked = true;
+                                }
+                                if (inputCde == "ULCERREL")
+                                {
+                                    this.ulcersRel.Checked = true;
+                                }
+                                if (inputCde == "KIDNREL ")
+                                {
+                                    this.kidneyRel.Checked = true;
+                                }
+                                if (inputCde == "EPILEREL")
+                                {
+                                    this.epilepsyRel.Checked = true;
+                                }
+                                if (inputCde == "MIGRAREL")
+                                {
+                                    this.migraineRel.Checked = true;
+                                }
+                                if (inputCde == "ARTHREL ")
+                                {
+                                    this.arthritisRel.Checked = true;
+                                }
+                                if (inputCde == "CANCREL ")
+                                {
+                                    this.cancerRel.Checked = true;
+                                }
+                                if (inputCde == "TBREL   ")
+                                {
+                                    this.tbRel.Checked = true;
+                                }
+                                if (inputCde == "ASTHMREL")
+                                {
+                                    this.asthmaRel.Checked = true;
+                                }
+                                if (inputCde == "ALLERREL")
+                                {
+                                    this.allergiesRel.Checked = true;
+                                }
+                                if (inputCde == "MENTREL ")
+                                {
+                                    this.mentalRel.Checked = true;
+                                }
+                                if (inputCde == "IMREC   ")
+                                {
+                                    this.MailImmunFrm.Checked = true;
+                                }
+                                if (inputCde == "MEDICATI")
+                                {
+                                    this.medications.Text = inputDte;
+                                }
+                                if (inputCde == "INJURY  ")
+                                {
+                                    this.injury.Checked = true;
+                                }
+                                if (inputCde == "HOSPIT  ")
+                                {
+                                    this.hospital.Checked = true;
+                                }
+                                if (inputCde == "MUMPS   ")
+                                {
+                                    this.mumps.Checked = true;
+                                }
+                                if (inputCde == "MONO    ")
+                                {
+                                    this.mono.Checked = true;
+                                }
+                                if (inputCde == "RUBELLA ")
+                                {
+                                    this.rubella.Checked = true;
+                                }
+                                if (inputCde == "RUBEOLA ")
+                                {
+                                    this.rubeola.Checked = true;
+                                }
+                                if (inputCde == "CHICKPOX")
+                                {
+                                    this.chickenpox.Checked = true;
+                                }
+                                if (inputCde == "TUBERCUL")
+                                {
+                                    this.tuberculosis.Checked = true;
+                                }
+                                if (inputCde == "BCGVACC ")
+                                {
+                                    this.bcgvaccine.Checked = true;
+                                }
+                                if (inputCde == "ALLEROTH")
+                                {
+                                    this.allergyother.Checked = true;
+                                }
+                                if (inputCde == "XRAYTHER")
+                                {
+                                    this.xray.Checked = true;
+                                }
+                                if (inputCde == "ENTDIS  ")
+                                {
+                                    this.entdisease.Checked = true;
+                                }
+                                if (inputCde == "HEADACHE")
+                                {
+                                    this.headache.Checked = true;
+                                }
+                                if (inputCde == "LUNGDIS ")
+                                {
+                                    this.lungdis.Checked = true;
+                                }
+                                if (inputCde == "BLOODPRE")
+                                {
+                                    this.bloodpress.Checked = true;
+                                }
+                                if (inputCde == "ABDOMINA")
+                                {
+                                    this.abdominal.Checked = true;
+                                }
+                                if (inputCde == "KIDNEY  ")
+                                {
+                                    this.kidney.Checked = true;
+                                }
+                                if (inputCde == "STD     ")
+                                {
+                                    this.std.Checked = true;
+                                }
+                                if (inputCde == "ENDOCRIN")
+                                {
+                                    this.endocrine.Checked = true;
+                                }
+                                if (inputCde == "ANEMIA  ")
+                                {
+                                    this.anemia.Checked = true;
+                                }
+                                if (inputCde == "BONEJOIN")
+                                {
+                                    this.bonejoint.Checked = true;
+                                }
+                                if (inputCde == "ASTHMA  ")
+                                {
+                                    this.asthma.Checked = true;
+                                }
+                                if (inputCde == "ACNE    ")
+                                {
+                                    this.acne.Checked = true;
+                                }
+                                if (inputCde == "CANCER  ")
+                                {
+                                    this.cancer.Checked = true;
+                                }
+                                if (inputCde == "BLOODTYP")
+                                {
+                                    this.bloodtype.Text = inputDte;
+                                }
+                                if (inputCde == "MEDALLER")
+                                {
+                                    this.medallergies.Text = inputDte;
+                                }
+                                if (inputCde == "OTHDISOR")
+                                {
+                                    this.otherdisorder.Text = inputDte;
+                                }
+                                if (inputCde == "DEPRESS ")
+                                {
+                                    this.depression.Checked = true;
+                                }
+                                if (inputCde == "ANXIETY ")
+                                {
+                                    this.anxiety.Checked = true;
+                                }
+                                if (inputCde == "BIPOLAR ")
+                                {
+                                    this.bipolar.Checked = true;
+                                }
+                                if (inputCde == "OBSESSIV")
+                                {
+                                    this.obsessive.Checked = true;
+                                }
+                                if (inputCde == "PSTD    ")
+                                {
+                                    this.pstd.Checked = true;
+                                }
+                                if (inputCde == "ADHD    ")
+                                {
+                                    this.adhd.Checked = true;
+                                }
+                                if (inputCde == "SUICIDAL")
+                                {
+                                    this.suicidal.Checked = true;
+                                }
+                                if (inputCde == "EATING  ")
+                                {
+                                    this.eating.Checked = true;
+                                }
+                                if (inputCde == "ANGER   ")
+                                {
+                                    this.anger.Checked = true;
+                                }
+                                if (inputCde == "SUICATT ")
+                                {
+                                    this.suicideAtt.Checked = true;
+                                }
+                                if (inputCde == "PANIC   ")
+                                {
+                                    this.panic.Checked = true;
+                                }
+                                if (inputCde == "SLEEP   ")
+                                {
+                                    this.sleep.Checked = true;
+                                }
+                                if (inputCde == "CONDUCT ")
+                                {
+                                    this.conduct.Checked = true;
+                                }
+                                if (inputCde == "ALCOHOL ")
+                                {
+                                    this.alcohol.Checked = true;
+                                }
+                                if (inputCde == "MEDMENTA")
+                                {
+                                    this.medication.Checked = true;
+                                }
+                                if (inputCde == "MENTMEDS")
+                                {
+                                    this.disordermeds.Text = inputDte;
+                                }
+                                if (inputCde == "PSYTHER ")
+                                {
+                                    this.psytherTxt.Text = inputDte;
+                                }
+                                if (inputCde == "PSYHOSP ")
+                                {
+                                    this.psyhospdtl.Text = inputDte;
+                                }
+                                if (inputCde == "ADDICT  ")
+                                {
+                                    this.addictdates.Text = inputDte;
+                                }
+                                if (inputCde == "DISABIL1")
+                                {
+                                    this.disability1.Text = inputDte;
+                                }
+                                if (inputCde == "DISABIL2")
+                                {
+                                    this.disability2.Text = inputDte;
+                                }
+                                if (inputCde == "DISABIL3")
+                                {
+                                    this.disability3.Text = inputDte;
+                                }
+                                if (inputCde == "DISABIL4")
+                                {
+                                    this.disability4.Text = inputDte;
+                                }
+                                if (inputCde == "DISABIL5")
+                                {
+                                    this.disability5.Text = inputDte;
+                                }
+                            }
+                        }
+                        custreader.Close();
+
+

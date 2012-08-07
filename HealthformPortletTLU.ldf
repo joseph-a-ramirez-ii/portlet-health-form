@@ -1,0 +1,20 @@
+# START - HealthFormPortletTLU
+dn: CN=[CUS] HealthFormPortletTLU,OU=PortletTemplates,CN=Portal,O=Jenzabar,C=US
+changetype: add
+jenzabar-ICSNET-GUID:: qzK+C9NVw0+yqPYxGoiOqg==
+objectClass: top
+objectClass: jenzabar-ICSNET-PortletTemplate
+displayName: HealthFormPortletTLU
+jenzabar-ICSNET-PortletPath: Portlet.HealthFormPortletTLU,CUS.ICS.HealthFormPortletTLU.HealthFormPortletTLU
+jenzabar-ICSNET-ApplicationPointer: CN=CUS,OU=PortalApplications,CN=Portal,O=Jenzabar,C=US
+instanceType: 4
+objectCategory: CN=Portlet-Template,CN=Schema,cn=configuration,cn=x
+
+dn: OU=Operations,CN=[CUS] HealthFormPortletTLU,OU=PortletTemplates,CN=Portal,O=Jenzabar,C=US
+changetype: add
+objectClass: top
+objectClass: organizationalUnit
+instanceType: 4
+objectCategory: CN=Organizational-Unit,CN=Schema,CN=Configuration,CN=X
+# END - HealthFormPortletTLU
+

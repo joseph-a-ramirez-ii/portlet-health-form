@@ -1,0 +1,1647 @@
+        protected void btnSubmit2_Click(object sender, EventArgs e)
+        {
+            if (Page.IsPostBack)
+            {
+                if (Page.IsValid)
+                {
+                    SqlConnection sqlconUp = new SqlConnection(
+                                System.Configuration.ConfigurationManager
+                                .ConnectionStrings["JenzabarConnectionString"]
+                                .ConnectionString);
+                    sqlconUp.Open();
+                    idnum = Jenzabar.Portal.Framework.PortalUser.Current.HostID;
+
+
+                    String pageItem;
+                    String cmtText = "";
+                    String sqlUpdate;
+                    String sqlInsert;
+                    String sqlCheck;
+                    DateTime Now = DateTime.Now;
+                    DateTime imDt;
+                    pageItem = Now.ToString();
+                    curtime = Now.ToString();
+                    idnum = this.tluid.Text;
+                    // Write immunization records
+
+                    cmtText = "Form submitted On Line";
+                    sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                           + "SET BEGIN_DTE = '" + pageItem + "',USER_NAME = '" + usernm + "'"
+                           + ", JOB_TIME = '" + pageItem + "' "
+                           + "WHERE SESS_CDE = 'HEALTH' and ID_NUM = '" + idnum + "' and HEALTH_CDE = 'HFORM'";
+                    SqlCommand sqlStmtInit = new SqlCommand(sqlUpdate, sqlconUp);
+                    sqlStmtInit.ExecuteNonQuery();
+                    this.ParentPortlet.NextScreen("MAIN");
+
+
+                    if (this.CheckBox4.Checked == true)
+                    {
+                        try
+                        {
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                               + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, COMMENTS1,COMMENTS2,COMMENTS3,COMMENTS4,USER_NAME,JOB_NAME,JOB_TIME) "
+                               + "VALUES('" + session + "', '" + idnum + "','CONSENT','" + this.parentgd.Text + "','" + this.parentgdCty.Text + "','" + this.parentgdSt.Text + "','" + this.parentgdZip.Text + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            cmtText = this.parentgdPh.Text + ',' + this.parentgdCty.Text + ',' + this.parentgdZip.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                               + "SET HEALTH_CDE_DESC = '" + this.parentgd.Text + "' "
+                               + ",COMMENTS1 = '" + this.parentgdPh.Text + "' "
+                               + ",COMMENTS2 = '" + this.parentgdCty.Text + "' "
+                               + ",COMMENTS3 = '" + this.parentgdSt.Text + "' "
+                               + ",COMMENTS4 = '" + this.parentgdZip.Text + "' "
+                               + ",USER_NAME = '" + usernm + "'"
+                               + ", JOB_TIME = '" + pageItem + "' "
+                               + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'CONSENT%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.tetdipDt.Text == ""))
+                    {
+
+                        try
+                        {
+                            pageItem = this.tetdipDt.Text;
+                            cmtText = "Tetanus/Diptheria";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','TETANUS','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.tetdipDt.Text;
+                            imDt = Convert.ToDateTime(pageItem);
+
+                            cmtText = "Tetanus/Diptheria";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + ", COMMENT_TXT = '" + cmtText + "' "
+                                   + ", JOB_TIME = '" + curtime + "' "
+                                   + "WHERE SESS_CDE = 'HEALTH  ' and ID_NUM = '" + idnum + "' and HEALTH_CDE = 'TETANUS '";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+
+                    }
+
+                    if (!(this.meningitisDt.Text == ""))
+                    {
+
+                        try
+                        {
+                            pageItem = this.meningitisDt.Text;
+                            cmtText = "Meningitis";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MENING','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.meningitisDt.Text;
+                            imDt = Convert.ToDateTime(pageItem);
+
+                            cmtText = "Meningitis";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + ", COMMENT_TXT = '" + cmtText + "' "
+                                   + ", JOB_TIME = '" + curtime + "' "
+                                   + "WHERE SESS_CDE = 'HEALTH  ' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'MENING%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+
+                    if (!(this.polio.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.polio.Text;
+                            cmtText = "Polio";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','POLIO','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.polio.Text;
+                            cmtText = "Polio";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'POLIO%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.measlesDt1.Text == ""))
+                    {
+
+                        try
+                        {
+                            pageItem = this.measlesDt1.Text;
+                            cmtText = "Measles";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MEASLES1','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.measlesDt1.Text;
+                            cmtText = "Measles";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'MEASLES1'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.Imunmmr1.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.Imunmmr1.Text;
+                            cmtText = "Mumps/Measle/Rubella";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MMR1','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.Imunmmr1.Text;
+                            cmtText = "Mumps/Measle/Rubella";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'MMR1%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.Imunhep1.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.Imunhep1.Text;
+                            cmtText = "Hepatitis 1";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','HEPB1','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.Imunhep1.Text;
+                            cmtText = "Hepatitis 1";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'HEPB1%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.measlesDt2.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.measlesDt2.Text;
+                            cmtText = "Measles 2";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MEASLES2','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.measlesDt2.Text;
+                            cmtText = "Measles 2";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'MEASLES2'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.Imunmmr2.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.Imunmmr2.Text;
+                            cmtText = "Measles/Mumps/Rubella 2";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MMR2','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.Imunmmr2.Text;
+                            cmtText = "Measles/Mumps/Rubella 2";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'MMR2%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.Imunhep2.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.Imunhep2.Text;
+                            cmtText = "Hepatitis 2";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','HEPB2','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.Imunhep2.Text;
+                            cmtText = "Hepatitis 2";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'HEPB2%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.Imunmumps.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.Imunmmr2.Text;
+                            cmtText = "Mumps";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MUMPS','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.Imunmmr2.Text;
+                            cmtText = "Mumps";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'MUMPS%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.Imunhep3.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.Imunhep3.Text;
+                            cmtText = "Hepatitis 3";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','HEPB3','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.Imunhep3.Text;
+                            cmtText = "Hepatitis 3";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'HEPB3%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.Imunrubella.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.Imunrubella.Text;
+                            cmtText = "Rubella";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','RUBELLA','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.Imunrubella.Text;
+                            cmtText = "Rubella";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'RUBELLA%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!(this.tbtestdt.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = this.tbtestdt.Text;
+                            cmtText = "TB Result : " + this.TB.Text;
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','TBTEST','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.tbtestdt.Text;
+                            cmtText = "TB Result : " + this.TB.Text;
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'TBTEST%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+
+                    if (this.TB.Text == "Yes")
+                    {
+                        try
+                        {
+                            pageItem = this.chestxray.Text;
+                            cmtText = "Chest Xray Date";
+                            sqlInsert = "INSERT INTO [dbo].[STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,BEGIN_DTE, COMMENT_TXT,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','XRAY','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = this.chestxray.Text;
+                            cmtText = "Chest Xray Date";
+                            sqlUpdate = "UPDATE [dbo].[STUD_HLTH_PROFILE] "
+                                   + "SET BEGIN_DTE = '" + pageItem + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'XRAY%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+
+                    //  Write health history records (Custom table)
+                    //                    
+                    //
+                    //
+                    if (this.hiBlPressRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Hi Blood Press, Relative";
+                            sqlUpdate = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','HIBLPREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+
+                        }
+                    }
+                    if (this.MailImmunFrm.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Immunization record mailed or faxed";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                               + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                               + "VALUES('" + session + "', '" + idnum + "','IMREC','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+
+                        }
+                    }
+                    if (this.strokeRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Stroke, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','STROKREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+
+                        }
+                    }
+
+                    if (this.hrtdisRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Heart Disease, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','HTDISREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+
+                        }
+                    }
+
+                    if (this.bldDisorderRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Bleeding disorder, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','BLEEDREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+
+                        }
+                    }
+
+                    if (this.diabetesRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Diabetes, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','DIABREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+
+                        }
+                    }
+
+                    if (this.ulcersRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Ulcers, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ULCERREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    if (this.kidneyRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Kidney, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','KIDNREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    if (this.epilepsyRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Epilepsy, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','EPILEREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    if (this.migraineRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Migraine, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MIGRAREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    if (this.arthritisRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Arthritis, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ARTHREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    if (this.cancerRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Cancer, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','CANCREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    if (this.tbRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Tuberculosis, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','TBREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    if (this.asthmaRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Asthma, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ASTHMREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    if (this.allergiesRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Allergies, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ALLERREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    if (this.mentalRel.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Mental Illness, Relative";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MENTREL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    //  Personal History
+
+                    if (this.injury.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Operation or Serious injury";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','INJURY','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.hospital.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Hospitalization";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','HOSPIT','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.mumps.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Mumps";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MUMPS','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.mono.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Mononucleosis";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MONO','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.rubella.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "German Measles (Rubella)";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','RUBELLA','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.rubeola.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Hard/red Measles (Rubeola)";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','RUBEOLA','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.chickenpox.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Chicken Pox";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','CHICKPOX','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.tuberculosis.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Tuberculosis";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','TUBERCUL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.bcgvaccine.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "BCG Vaccine";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','BCGVACC','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.allergyother.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Allergic Reaction";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ALLEROTH','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.xray.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "X-ray therapy";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','XRAYTHER','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.entdisease.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Eye, ear, nose, throat disease";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ENTDIS','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.headache.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Frequent/severe headache";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','HEADACHE','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.lungdis.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Lung disease";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','LUNGDIS','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.bloodpress.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Blood Press, rheumatic, heart, vessel";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','BLOODPRE','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.abdominal.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Abdominal or intestinal problem";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ABDOMINA','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.kidney.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Sugar, protein, kidney problem";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','KIDNEY','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.std.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Sexyally transmitted disease";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','STD','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.endocrine.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Diabetes, thyroid, endocrine disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ENDOCRIN','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.anemia.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Anemia or blood disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ANEMIA','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.bonejoint.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Bone, joint, muscle problem";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','BONEJOIN','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.asthma.Checked == true)
+                    {
+                        cmtText = "Hay fever, asthma, other allergy";
+                        sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                               + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                               + "VALUES('" + session + "', '" + idnum + "','ASTHMA','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                        SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                        sqlStmt.ExecuteNonQuery();
+                    }
+                    if (this.acne.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Severe acne, other skin disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ACNE','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.cancer.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Cancer or other tumor";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','CANCER','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.depression.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Depression";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','DEPRESS','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.anxiety.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Anxiety disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ANXIETY','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.bipolar.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Bipolar disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','BIPOLAR','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.obsessive.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Obsessive-compulsive disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','OBSESSIV','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.pstd.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Post traumatic";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','PSTD','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.adhd.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "ADD/ADHD";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ADHD','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.suicidal.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Suicidal ideation";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','SUICIDAL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.eating.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Eating disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','EATING','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.anger.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Anger management disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ANGER','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.suicideAtt.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Suicide attempt";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','SUICATT','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.panic.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Panic disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','PANIC','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.sleep.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Sleep disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','SLEEP','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.conduct.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Anti-social or conduct disorder";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','CONDUCT','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.alcohol.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Alcohol or substance abuse";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ALCOHOL','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+                    if (this.medication.Checked == true)
+                    {
+                        try
+                        {
+                            cmtText = "Have taken medications for mental";
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC, USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MEDMENTA','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            sqlUpdate = "";
+                        }
+                    }
+
+                    //   Text box entries
+                    if (!(this.medications.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Current meds: ";
+                            cmtText = this.medications.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MEDICATI','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Current meds: ";
+                            cmtText = this.medications.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'MEDICATI'";
+
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+                    if (!(this.bloodtype.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Blood Type: ";
+                            cmtText = this.bloodtype.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','BLOODTYP','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Blood Type: ";
+                            cmtText = this.bloodtype.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'BLOODTYP'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+                    if (!(this.medallergies.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Med Allergies : ";
+                            cmtText = this.medallergies.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MEDALLER','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Med Allergies : ";
+                            cmtText = this.medallergies.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'MEDALLER'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+                    if (!(this.otherdisorder.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Other Disorders : ";
+                            cmtText = this.otherdisorder.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','OTHDISOR','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Other Disorders : ";
+                            cmtText = this.otherdisorder.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'OTHDISOR'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+                    if (!(this.disordermeds.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Mental meds: ";
+                            cmtText = this.disordermeds.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','MENTMEDS','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Mental meds: ";
+                            cmtText = this.disordermeds.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'MENTMEDS'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+                    if (this.psyther.Text == "Yes")
+                    {
+                        try
+                        {
+                            pageItem = "Will continue psychotherapy";
+                            cmtText = this.psytherTxt.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','PSYTHER','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Will continue psychotherapy";
+                            cmtText = this.psytherTxt.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'PSYTHER%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+                    if (this.psyhosp.Text == "Yes")
+                    {
+                        try
+                        {
+                            pageItem = "Have been hospitalized, Psychiatric";
+                            cmtText = this.psyhospdtl.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','PSYHOSP','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Have been hospitalized, Psychiatric";
+                            cmtText = this.psyhospdtl.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'PSYHOSP%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+                    if (this.addict.Text == "Yes")
+                    {
+                        try
+                        {
+                            pageItem = "Treated for alcohol/substance ";
+                            cmtText = this.addictdates.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','ADDICT','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Treated for alcohol/substance ";
+                            cmtText = this.addictdates.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'ADDICT%'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+
+                    }
+                    if (!(this.disability1.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Nature of disability : ";
+                            cmtText = this.disability1.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','DISABIL1','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Nature of disability : ";
+                            cmtText = this.disability1.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'DISABIL1'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+                    if (!(this.disability2.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Nature of disability : ";
+                            cmtText = this.disability2.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','DISABIL2','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Disability Diagnosis : ";
+                            cmtText = this.disability2.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'DISABIL2'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+                    if (!(this.disability3.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Nature of disability : ";
+                            cmtText = this.disability3.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','DISABIL3','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Type accommodations : ";
+                            cmtText = this.disability3.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'DISABIL3'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+                    if (!(this.disability4.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Nature of disability : ";
+                            cmtText = this.disability4.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','DISABIL4','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Accommodations requested : ";
+                            cmtText = this.disability4.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'DISABIL4'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+                    if (!(this.disability5.Text == ""))
+                    {
+                        try
+                        {
+                            pageItem = "Nature of disability : ";
+                            cmtText = this.disability5.Text;
+                            sqlInsert = "INSERT INTO [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "(SESS_CDE,ID_NUM, HEALTH_CDE,HEALTH_CDE_DESC,COMMENTS1,USER_NAME,JOB_NAME,JOB_TIME) "
+                                   + "VALUES('" + session + "', '" + idnum + "','DISABIL5','" + pageItem + "','" + cmtText + "','" + usernm + "'," + "'HltFrmPort'" + ",'" + curtime + "')";
+                            SqlCommand sqlStmt = new SqlCommand(sqlInsert, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            pageItem = "Anticipate New accommodations : ";
+                            cmtText = this.disability5.Text;
+                            sqlUpdate = "UPDATE [dbo].[CUST_STUD_HLTH_PROFILE] "
+                                   + "SET HEALTH_CDE_DESC = '" + pageItem + "' "
+                                   + ", COMMENTS1 = '" + cmtText + "' "
+                                   + "WHERE SESS_CDE like 'HEALTH%' and ID_NUM = '" + idnum + "' and HEALTH_CDE like 'DISABIL5'";
+                            SqlCommand sqlStmt = new SqlCommand(sqlUpdate, sqlconUp);
+                            sqlStmt.ExecuteNonQuery();
+                        }
+                    }
+                    lblComplete.Text = "Thank you for completing the health form";
+                    this.ParentPortlet.NextScreen("Main");
+
+                }
+                else
+                {
+                    lblComplete.Text = "Please correct any errors and resubmit form";
+                    this.ParentPortlet.NextScreen("HlthFrmUpdt");
+                }
